@@ -19,26 +19,37 @@ Rendering Pipeline
 
 Vec3
 ↓
+
 Triangle
 ↓
+
 Mesh
 ↓
+
 Object3D
 ↓
+
 Model
 ↓
+
 Scene
 ↓
+
 World Transform
 ↓
+
 Camera Transform
 ↓
+
 Back-face Culling
 ↓
+
 Projection
 ↓
+
 Painter's Algorithm
 ↓
+
 Screen
 
 Controls
