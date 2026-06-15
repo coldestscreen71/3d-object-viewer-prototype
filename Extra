@@ -1,0 +1,8 @@
+for x, y in screen_tri:
+
+                    points.append(
+                    (
+                        x * 200 + WIDTH // 2,
+                        -y * 200 + HEIGHT // 2
+                    )
+                )

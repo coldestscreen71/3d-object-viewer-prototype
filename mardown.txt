@@ -1,0 +1,273 @@
+Engine Revision Notes
+
+Vec3
+
+Vec3(x, y, z)
+
+Represents a point in 3D space.
+
+Stores:
+
+- x
+- y
+- z
+
+Example:
+
+Vec3(1, 2, 3)
+
+---
+
+Triangle
+
+Triangle(p1, p2, p3)
+
+Represents one triangle face.
+
+Contains three Vec3 points.
+
+Example:
+
+Triangle(
+    Vec3(0, 0, 0),
+    Vec3(1, 0, 0),
+    Vec3(0, 1, 0)
+)
+
+---
+
+Mesh
+
+Mesh(vertices, faces)
+
+Represents the geometry of an object.
+
+Contains:
+
+- vertices
+- faces
+
+Contains no position.
+
+Contains no rotation.
+
+Examples:
+
+- Box
+- Cube
+- Sphere
+- Gun Mesh
+
+---
+
+Transform
+
+Transform(x, y, z)
+
+Represents where something is and how it is rotated.
+
+Contains:
+
+- x
+- y
+- z
+- rx
+- ry
+- rz
+
+Contains no geometry.
+
+---
+
+Object3D
+
+Object3D(mesh, transform)
+
+Combines:
+
+Mesh
++
+Transform
+
+Represents a thing that exists in the world.
+
+Examples:
+
+- Barrel
+- Stock
+- Grip
+- Cube
+
+---
+
+Model
+
+Model()
+
+Contains multiple Object3Ds.
+
+Used to build larger objects from smaller parts.
+
+Examples:
+
+- Gun
+- Car
+- Character
+
+Contains its own Transform.
+
+Allows all child Object3Ds to move and rotate together.
+
+---
+
+world_transform()
+
+world_transform(model, obj)
+
+Combines:
+
+Model Transform
++
+Object Transform
+=
+World Transform
+
+Produces the final transform of an Object3D in world space.
+
+---
+
+Camera
+
+Camera()
+
+Represents the player's view of the world.
+
+Contains:
+
+Transform
+
+Moving the camera does not move objects.
+
+Instead, the world is transformed relative to the camera.
+
+---
+
+camera_transform()
+
+camera_transform(camera, world_transform)
+
+Converts:
+
+World Space
+↓
+Camera Space
+
+Applies the inverse of the camera transform.
+
+---
+
+Scene
+
+Scene()
+
+Contains multiple Models.
+
+Examples:
+
+Gun
+Tree
+House
+Enemy
+
+The renderer draws everything inside the Scene.
+
+---
+
+project()
+
+project(point)
+
+Converts:
+
+3D
+↓
+2D
+
+using perspective division.
+
+Example:
+
+x = point.x / point.z
+y = point.y / point.z
+
+---
+
+Renderer
+
+render(camera, scene, screen, width, height)
+
+Draws every model in the scene.
+
+Responsible for:
+
+World Transform
+↓
+Camera Transform
+↓
+Projection
+↓
+Drawing
+
+---
+
+Full Render Pipeline
+
+Vec3
+↓
+Triangle
+↓
+Mesh
+↓
+Object3D
+↓
+Model
+↓
+world_transform()
+↓
+camera_transform()
+↓
+apply_triangle()
+↓
+project()
+↓
+pygame.draw.polygon()
+↓
+Screen
+
+---
+
+Space Conversion Pipeline
+
+Local Space
+↓
+World Space
+↓
+Camera Space
+↓
+Screen Space
+
+Where:
+
+Object3D
+↓
+world_transform()
+↓
+World Space
+↓
+camera_transform()
+↓
+Camera Space
+↓
+project()
+↓
+Screen Space
